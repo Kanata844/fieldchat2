@@ -1,0 +1,9 @@
+.me{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.you{
+    display: flex;
+    justify-content: flex-start;
+}
