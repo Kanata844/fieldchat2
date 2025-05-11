@@ -1,4 +1,4 @@
-import express, { request } from "express";
+import express, { request, response } from "express";
 import { PrismaClient } from "./generated/prisma/index.js";
 
 const app = new express();
@@ -44,7 +44,7 @@ class Users {
         this.array_users = [];
         const users = await client.position.findMany();
         for (let i = 0; i < users.length; i++) {
-            this.add({ email: users[i].email, username: users[i].username, x: users[i].x, y: users[i].y });
+            this.add({ email: users[i].email, username: users[i].username, x: users[i].x, y: users[i].y, color: users[i].color});
         }
     }
 
@@ -83,6 +83,11 @@ app.get("/users", async (request, response) => {
     response.send(JSON.stringify(users.getArray()));
 });
 
+app.post("/setcolor", async(request, response) => {
+    await client.position.update({where: {email: request.body.email}, data: {color:request.body.color}});
+    response.send("変更しました");
+});
+
 app.post("/signUp", async (request, response) => {
     //response.send(`名前：${request.body.username}、Eメール：${request.body.email}`);
     const user = await client.user.findUnique({
@@ -92,7 +97,7 @@ app.post("/signUp", async (request, response) => {
     });
     if (user === null) {
         await client.user.create({ data: { email: request.body.email, username: request.body.username, password: request.body.password } });
-        const obj_position = { email: request.body.email, username: request.body.username, x: Math.trunc(Math.random() * 1920), y: Math.trunc(Math.random() * 1080) };
+        const obj_position = { email: request.body.email, username: request.body.username, x: Math.trunc(Math.random() * 1400), y: Math.trunc(Math.random() * 700), color: "red"};
         await client.position.create({ data: obj_position });
         users.add(obj_position);
         const message = { status: "success", email: request.body.email, username: request.body.username };

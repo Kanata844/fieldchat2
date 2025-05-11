@@ -2097,6 +2097,7 @@ export namespace Prisma {
     username: string | null
     x: number | null
     y: number | null
+    color: string | null
   }
 
   export type PositionMaxAggregateOutputType = {
@@ -2105,6 +2106,7 @@ export namespace Prisma {
     username: string | null
     x: number | null
     y: number | null
+    color: string | null
   }
 
   export type PositionCountAggregateOutputType = {
@@ -2113,6 +2115,7 @@ export namespace Prisma {
     username: number
     x: number
     y: number
+    color: number
     _all: number
   }
 
@@ -2135,6 +2138,7 @@ export namespace Prisma {
     username?: true
     x?: true
     y?: true
+    color?: true
   }
 
   export type PositionMaxAggregateInputType = {
@@ -2143,6 +2147,7 @@ export namespace Prisma {
     username?: true
     x?: true
     y?: true
+    color?: true
   }
 
   export type PositionCountAggregateInputType = {
@@ -2151,6 +2156,7 @@ export namespace Prisma {
     username?: true
     x?: true
     y?: true
+    color?: true
     _all?: true
   }
 
@@ -2246,6 +2252,7 @@ export namespace Prisma {
     username: string
     x: number
     y: number
+    color: string
     _count: PositionCountAggregateOutputType | null
     _avg: PositionAvgAggregateOutputType | null
     _sum: PositionSumAggregateOutputType | null
@@ -2273,6 +2280,7 @@ export namespace Prisma {
     username?: boolean
     x?: boolean
     y?: boolean
+    color?: boolean
   }, ExtArgs["result"]["position"]>
 
   export type PositionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2281,6 +2289,7 @@ export namespace Prisma {
     username?: boolean
     x?: boolean
     y?: boolean
+    color?: boolean
   }, ExtArgs["result"]["position"]>
 
   export type PositionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2289,6 +2298,7 @@ export namespace Prisma {
     username?: boolean
     x?: boolean
     y?: boolean
+    color?: boolean
   }, ExtArgs["result"]["position"]>
 
   export type PositionSelectScalar = {
@@ -2297,9 +2307,10 @@ export namespace Prisma {
     username?: boolean
     x?: boolean
     y?: boolean
+    color?: boolean
   }
 
-  export type PositionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "x" | "y", ExtArgs["result"]["position"]>
+  export type PositionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "x" | "y" | "color", ExtArgs["result"]["position"]>
 
   export type $PositionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Position"
@@ -2310,6 +2321,7 @@ export namespace Prisma {
       username: string
       x: number
       y: number
+      color: string
     }, ExtArgs["result"]["position"]>
     composites: {}
   }
@@ -2738,6 +2750,7 @@ export namespace Prisma {
     readonly username: FieldRef<"Position", 'String'>
     readonly x: FieldRef<"Position", 'Int'>
     readonly y: FieldRef<"Position", 'Int'>
+    readonly color: FieldRef<"Position", 'String'>
   }
     
 
@@ -4175,7 +4188,8 @@ export namespace Prisma {
     email: 'email',
     username: 'username',
     x: 'x',
-    y: 'y'
+    y: 'y',
+    color: 'color'
   };
 
   export type PositionScalarFieldEnum = (typeof PositionScalarFieldEnum)[keyof typeof PositionScalarFieldEnum]
@@ -4317,6 +4331,7 @@ export namespace Prisma {
     username?: StringFilter<"Position"> | string
     x?: IntFilter<"Position"> | number
     y?: IntFilter<"Position"> | number
+    color?: StringFilter<"Position"> | string
   }
 
   export type PositionOrderByWithRelationInput = {
@@ -4325,6 +4340,7 @@ export namespace Prisma {
     username?: SortOrder
     x?: SortOrder
     y?: SortOrder
+    color?: SortOrder
   }
 
   export type PositionWhereUniqueInput = Prisma.AtLeast<{
@@ -4336,6 +4352,7 @@ export namespace Prisma {
     username?: StringFilter<"Position"> | string
     x?: IntFilter<"Position"> | number
     y?: IntFilter<"Position"> | number
+    color?: StringFilter<"Position"> | string
   }, "id" | "email">
 
   export type PositionOrderByWithAggregationInput = {
@@ -4344,6 +4361,7 @@ export namespace Prisma {
     username?: SortOrder
     x?: SortOrder
     y?: SortOrder
+    color?: SortOrder
     _count?: PositionCountOrderByAggregateInput
     _avg?: PositionAvgOrderByAggregateInput
     _max?: PositionMaxOrderByAggregateInput
@@ -4360,6 +4378,7 @@ export namespace Prisma {
     username?: StringWithAggregatesFilter<"Position"> | string
     x?: IntWithAggregatesFilter<"Position"> | number
     y?: IntWithAggregatesFilter<"Position"> | number
+    color?: StringWithAggregatesFilter<"Position"> | string
   }
 
   export type ChatroomWhereInput = {
@@ -4472,6 +4491,7 @@ export namespace Prisma {
     username: string
     x: number
     y: number
+    color: string
   }
 
   export type PositionUncheckedCreateInput = {
@@ -4480,6 +4500,7 @@ export namespace Prisma {
     username: string
     x: number
     y: number
+    color: string
   }
 
   export type PositionUpdateInput = {
@@ -4487,6 +4508,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     x?: IntFieldUpdateOperationsInput | number
     y?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
   }
 
   export type PositionUncheckedUpdateInput = {
@@ -4495,6 +4517,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     x?: IntFieldUpdateOperationsInput | number
     y?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
   }
 
   export type PositionCreateManyInput = {
@@ -4503,6 +4526,7 @@ export namespace Prisma {
     username: string
     x: number
     y: number
+    color: string
   }
 
   export type PositionUpdateManyMutationInput = {
@@ -4510,6 +4534,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     x?: IntFieldUpdateOperationsInput | number
     y?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
   }
 
   export type PositionUncheckedUpdateManyInput = {
@@ -4518,6 +4543,7 @@ export namespace Prisma {
     username?: StringFieldUpdateOperationsInput | string
     x?: IntFieldUpdateOperationsInput | number
     y?: IntFieldUpdateOperationsInput | number
+    color?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChatroomCreateInput = {
@@ -4675,6 +4701,7 @@ export namespace Prisma {
     username?: SortOrder
     x?: SortOrder
     y?: SortOrder
+    color?: SortOrder
   }
 
   export type PositionAvgOrderByAggregateInput = {
@@ -4689,6 +4716,7 @@ export namespace Prisma {
     username?: SortOrder
     x?: SortOrder
     y?: SortOrder
+    color?: SortOrder
   }
 
   export type PositionMinOrderByAggregateInput = {
@@ -4697,6 +4725,7 @@ export namespace Prisma {
     username?: SortOrder
     x?: SortOrder
     y?: SortOrder
+    color?: SortOrder
   }
 
   export type PositionSumOrderByAggregateInput = {

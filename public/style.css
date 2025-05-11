@@ -1,3 +1,7 @@
+body{
+    background-color: #ebe8d5;
+}
+
 .me{
     display: flex;
     justify-content: flex-end;

@@ -5,16 +5,23 @@ class Entity {
     y;
     speed = 2;
     image;
+    defaultColor;
     color;
     email;
     username;
 
-    constructor(email, username, x, y) {
-        this.color = "red";
+    constructor(email, username, x, y, color) {
+        this.defaultColor = color;
+        this.color = color;
         this.x = x;
         this.y = y;
         this.email = email;
         this.username = username;
+    }
+
+    moveRandom() {
+        this.x = Math.trunc(Math.random() * 1400);
+        this.y = Math.trunc(Math.random() * 700);
     }
 
     up() {
@@ -32,6 +39,10 @@ class Entity {
 
     setColor(color) {
         this.color = color;
+    }
+
+    setDefaultColor(){
+        this.color = this.defaultColor;
     }
 
     draw(context) {
@@ -57,6 +68,54 @@ class Entity {
 
 class Page{
     body;
+}
+
+class SettingPage extends Page{
+    myEmail;
+    myUserName;
+    myColor;
+
+    constructor(myEmail, myUserName, myColor){
+        super();
+        this.myEmail = myEmail;
+        this.myUserName = myUserName;
+        this.myColor = myColor;
+        this.launch();
+    }
+
+    launch(){
+        this.body = document.getElementById("body");
+        const h1 = document.createElement("h1");
+        h1.textContent = "色の設定";
+        this.body.appendChild(h1);
+        const selectColor = document.createElement("input");
+        selectColor.type = "color";
+        selectColor.value = this.myColor;
+        this.body.appendChild(selectColor);
+        const save = document.createElement("button");
+        this.body.appendChild(save);
+        save.onclick = async() => {
+            const response = await fetch("/setcolor", {
+                method: "post",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({email: this.myEmail, color: selectColor.value})
+            });
+            const text = await response.text();
+            alert(text);
+        };
+        save.textContent = "保存";
+        const exit = document.createElement("button");
+        this.body.appendChild(exit);
+        exit.onclick = () => {
+            this.destroy();
+            new FieldPage(this.myEmail, this.myUserName);
+        }
+        exit.textContent = "戻る";
+    }
+
+    destroy(){
+        this.body.innerHTML = "";
+    }
 }
 
 class ChatPage extends Page{
@@ -178,9 +237,9 @@ class FieldPage extends Page{
         this.npcs = [];
         for (let i = 0; i < array.length; i++) {
             if(array[i].email === this.email_player){
-                this.player = new Entity(array[i].email, array[i].username, array[i].x, array[i].y);
+                this.player = new Entity(array[i].email, array[i].username, array[i].x, array[i].y, array[i].color);
             } else {
-                this.npcs.push(new Entity(array[i].email, array[i].username, array[i].x, array[i].y));
+                this.npcs.push(new Entity(array[i].email, array[i].username, array[i].x, array[i].y, array[i].color));
             }
         }
         this.drawEntities();
@@ -192,7 +251,7 @@ class FieldPage extends Page{
         this.npcs = [];
         for (let i = 0; i < array.length; i++) {
             if(array[i].email !== this.email_player){
-                this.npcs.push(new Entity(array[i].email, array[i].username, array[i].x, array[i].y));
+                this.npcs.push(new Entity(array[i].email, array[i].username, array[i].x, array[i].y, array[i].color));
             }
         }
         console.log(array);
@@ -207,7 +266,9 @@ class FieldPage extends Page{
     }
 
     drawEntities(){
-        this.context.clearRect(0,0, 1920, 1080);
+        this.context.clearRect(0,0, this.canvas.width, this.canvas.height);
+        this.context.fillStyle = "#00ff00";
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.player.draw(this.context);
         
@@ -216,7 +277,7 @@ class FieldPage extends Page{
                 this.npcs[i].setColor("blue");
             }
             else {
-                this.npcs[i].setColor("red");
+                this.npcs[i].setDefaultColor();
             }
             this.npcs[i].draw(this.context);
         }
@@ -236,16 +297,25 @@ class FieldPage extends Page{
 
     launch = async () => {
         this.body = document.getElementById("body");
+        const button = document.createElement("button");
+        button.onclick = async() => {
+            this.player.moveRandom();
+        };
+        this.body.appendChild(button);
+        button.textContent = "フィールド内のランダムな場所に移動";
+        const setting = document.createElement("button");
+        setting.onclick = () => {
+            this.destroy();
+            new SettingPage(this.email_player, this.username_player, this.player.color);
+        }
+        this.body.appendChild(setting);
+        setting.textContent = "設定"
         this.canvas = document.createElement("canvas");
-        this.canvas.width = 1920;
-        this.canvas.height = 1080;
+        this.canvas.width = 1400;
+        this.canvas.height = 700;
         if(this.body !== null){
             this.body.appendChild(this.canvas);
         }
-        const button = document.createElement("button");
-        button.onclick = async() => await this.saveCurrentPositionOfPlayer();
-        this.body.appendChild(button);
-        button.textContent = "場所を保存";
         this.context = this.canvas.getContext("2d");
         await this.setUsers();
         this.eventHandler = async (e) => {

@@ -132,7 +132,8 @@ exports.Prisma.PositionScalarFieldEnum = {
   email: 'email',
   username: 'username',
   x: 'x',
-  y: 'y'
+  y: 'y',
+  color: 'color'
 };
 
 exports.Prisma.ChatroomScalarFieldEnum = {

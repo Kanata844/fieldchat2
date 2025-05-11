@@ -27,6 +27,7 @@ model Position {
   username String
   x        Int
   y        Int
+  color    String
 }
 
 model Chatroom {
